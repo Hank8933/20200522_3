@@ -22,47 +22,18 @@ void getName(char n[21])
     *(n + i) = 0;
 }
 
-int CM1(const void *a, const void *b)  //Sort by ID
-{
-    SS c = *(SS *)a;
-    SS d = *(SS *)b;
-    return strcmp(c.pi.id, d.pi.id);
+#define CMX(x,y) int CM ## x (const void *a, const void *b)\
+{\
+    SS c = *(SS *)a;\
+    SS d = *(SS *)b;\
+    return y ;\
 }
-
-int CM2(const void *a, const void *b)  //Sort by Name
-{
-    SS c = *(SS *)a;
-    SS d = *(SS *)b;
-    return strcmp(c.pi.name, d.pi.name);
-}
-
-int CM3(const void *a, const void *b)  //Sort by Score1
-{
-    SS c = *(SS *)a;
-    SS d = *(SS *)b;
-    return CMP(c.score[0], d.score[0]);
-}
-
-int CM4(const void *a, const void *b)  //Sort by Score2
-{
-    SS c = *(SS *)a;
-    SS d = *(SS *)b;
-    return CMP(c.score[1], d.score[1]);
-}
-
-int CM5(const void *a, const void *b)  //Sort by Score3
-{
-    SS c = *(SS *)a;
-    SS d = *(SS *)b;
-    return CMP(c.score[2], d.score[2]);
-}
-
-int CM6(const void *a, const void *b)  //Sort by Score4
-{
-    SS c = *(SS *)a;
-    SS d = *(SS *)b;
-    return CMP(c.score[3], d.score[3]);
-}
+CMX(1, strcmp(c.pi.id, d.pi.id))  //Sort by ID
+CMX(2, strcmp(c.pi.name, d.pi.name))  //Sort by Name
+CMX(3, CMP(c.score[0], d.score[0]))  //Sort by Score1
+CMX(4, CMP(c.score[1], d.score[1]))  //Sort by Score2
+CMX(5, CMP(c.score[2], d.score[2]))  //Sort by Score3
+CMX(6, CMP(c.score[3], d.score[3]))  //Sort by Score4
 
 void showList(int n, SS l[n])
 {
@@ -71,7 +42,7 @@ void showList(int n, SS l[n])
     putchar('\n');
 }
 
-#define sort(i) qsort((void *)list, n, sizeof(SS), CM ## i);
+#define sort(x) qsort((void *)list, n, sizeof(SS), CM ## x);
 #define SL showList(n, list)
 int main()
 {
